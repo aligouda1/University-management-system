@@ -1,0 +1,3 @@
+CS101,Data Structures,3
+CS102,OOP with C++,3
+MATH101,Calculus II,None
