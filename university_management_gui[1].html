@@ -1,0 +1,772 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f0f2f5;--card:#fff;--sidebar:#1a2942;--sidebar-hover:#243656;
+  --accent:#2563eb;--accent2:#16a34a;--warn:#d97706;--danger:#dc2626;
+  --text:#1e293b;--muted:#64748b;--border:#e2e8f0;--radius:10px;
+}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:600px;display:flex;flex-direction:column}
+.app{display:flex;flex:1;min-height:580px}
+
+/* SIDEBAR */
+.sidebar{width:210px;background:var(--sidebar);color:#fff;display:flex;flex-direction:column;flex-shrink:0}
+.logo{padding:18px 16px 12px;border-bottom:1px solid #2d4170}
+.logo-title{font-size:14px;font-weight:600;color:#fff}
+.logo-sub{font-size:11px;color:#94a3b8;margin-top:2px}
+.nav{flex:1;padding:10px 0}
+.nav-section{font-size:10px;color:#64748b;padding:12px 16px 4px;text-transform:uppercase;letter-spacing:.06em}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 16px;cursor:pointer;font-size:13px;color:#cbd5e1;border-left:3px solid transparent;transition:all .15s}
+.nav-item:hover{background:var(--sidebar-hover);color:#fff}
+.nav-item.active{background:var(--sidebar-hover);color:#fff;border-left-color:var(--accent)}
+.nav-item .icon{font-size:16px;width:18px;text-align:center}
+.role-badge{margin:12px;padding:8px 12px;background:#243656;border-radius:8px;font-size:12px}
+.role-badge .rb-label{color:#94a3b8;font-size:10px}
+.role-badge .rb-name{color:#fff;font-weight:600;margin-top:2px}
+.role-badge .rb-role{color:#60a5fa;font-size:11px}
+
+/* MAIN */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{background:#fff;border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;justify-content:space-between}
+.page-title{font-size:16px;font-weight:600;color:var(--text)}
+.topbar-right{display:flex;gap:8px;align-items:center}
+.top-btn{padding:6px 14px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:12px;cursor:pointer;color:var(--text)}
+.top-btn:hover{background:var(--bg)}
+.top-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.top-btn.primary:hover{background:#1d4ed8}
+.top-btn.danger{background:var(--danger);color:#fff;border-color:var(--danger)}
+
+.content{flex:1;padding:20px;overflow-y:auto}
+
+/* CARDS */
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.stat-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:16px}
+.stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.stat-value{font-size:26px;font-weight:700;margin:4px 0 2px;color:var(--text)}
+.stat-sub{font-size:11px;color:var(--muted)}
+.stat-card.blue .stat-value{color:var(--accent)}
+.stat-card.green .stat-value{color:var(--accent2)}
+.stat-card.warn .stat-value{color:var(--warn)}
+.stat-card.red .stat-value{color:var(--danger)}
+
+.card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:16px;margin-bottom:16px}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.card-title{font-size:14px;font-weight:600}
+.card-action{font-size:12px;color:var(--accent);cursor:pointer}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:8px 12px;border-bottom:2px solid var(--border);color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#f8fafc}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500}
+.badge.student{background:#dbeafe;color:#1e40af}
+.badge.instructor{background:#d1fae5;color:#065f46}
+.badge.admin{background:#fce7f3;color:#9d174d}
+.badge.open{background:#d1fae5;color:#065f46}
+.badge.full{background:#fee2e2;color:#991b1b}
+.badge.pass{background:#d1fae5;color:#065f46}
+.badge.fail{background:#fee2e2;color:#991b1b}
+.badge.warn{background:#fef3c7;color:#92400e}
+
+/* FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-group{display:flex;flex-direction:column;gap:4px}
+.form-group label{font-size:12px;color:var(--muted);font-weight:500}
+.form-group input,.form-group select{padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;background:#fff;color:var(--text);outline:none}
+.form-group input:focus,.form-group select:focus{border-color:var(--accent)}
+.form-actions{display:flex;gap:8px;margin-top:14px}
+.btn{padding:8px 18px;border-radius:6px;font-size:13px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--text)}
+.btn:hover{background:var(--bg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn.primary:hover{background:#1d4ed8}
+.btn.danger{background:var(--danger);color:#fff;border-color:var(--danger)}
+.btn.success{background:var(--accent2);color:#fff;border-color:var(--accent2)}
+
+/* ALERT */
+.alert{padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:12px;display:none}
+.alert.show{display:flex;align-items:center;gap:8px}
+.alert.success{background:#d1fae5;color:#065f46;border:1px solid #6ee7b7}
+.alert.error{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5}
+.alert.info{background:#dbeafe;color:#1e40af;border:1px solid #93c5fd}
+
+/* LOGIN */
+.login-screen{display:flex;align-items:center;justify-content:center;min-height:580px;background:linear-gradient(135deg,#1a2942 0%,#2563eb 100%)}
+.login-box{background:#fff;border-radius:16px;padding:36px;width:340px;box-shadow:0 20px 40px rgba(0,0,0,.3)}
+.login-title{font-size:22px;font-weight:700;color:var(--text);margin-bottom:4px}
+.login-sub{font-size:13px;color:var(--muted);margin-bottom:24px}
+.login-field{margin-bottom:14px}
+.login-field label{display:block;font-size:12px;color:var(--muted);font-weight:500;margin-bottom:4px}
+.login-field input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:14px;outline:none}
+.login-field input:focus{border-color:var(--accent)}
+.login-btn{width:100%;padding:11px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;margin-top:4px}
+.login-btn:hover{background:#1d4ed8}
+.quick-logins{margin-top:18px;border-top:1px solid var(--border);padding-top:14px}
+.quick-label{font-size:11px;color:var(--muted);margin-bottom:8px;text-align:center}
+.quick-row{display:flex;gap:6px}
+.quick-role{flex:1;padding:7px 4px;border:1px solid var(--border);border-radius:6px;font-size:11px;text-align:center;cursor:pointer;color:var(--text)}
+.quick-role:hover{background:var(--bg);border-color:var(--accent);color:var(--accent)}
+
+/* ANALYTICS */
+.analytics-bar{height:28px;background:#e2e8f0;border-radius:4px;overflow:hidden;margin:4px 0}
+.analytics-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:11px;color:#fff;font-weight:600;transition:width .6s ease}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* OUTPUT */
+.output-box{background:#0f172a;border-radius:8px;padding:14px;font-family:monospace;font-size:12px;color:#e2e8f0;min-height:80px;max-height:160px;overflow-y:auto;white-space:pre-wrap}
+.output-line.green{color:#4ade80}
+.output-line.yellow{color:#fbbf24}
+.output-line.red{color:#f87171}
+.output-line.cyan{color:#67e8f9}
+.output-line.gray{color:#94a3b8}
+</style>
+
+<div id="loginScreen" class="login-screen">
+  <div class="login-box">
+    <div class="login-title">🎓 University System</div>
+    <div class="login-sub">CSAI 151 — OOP Project</div>
+    <div id="loginAlert" class="alert error">Wrong email or password</div>
+    <div class="login-field">
+      <label>Email</label>
+      <input id="loginEmail" type="text" placeholder="Enter your email" value="ali@uni.edu"/>
+    </div>
+    <div class="login-field">
+      <label>Password</label>
+      <input id="loginPass" type="password" placeholder="Enter password" value="admin123"/>
+    </div>
+    <button class="login-btn" onclick="doLogin()">Login</button>
+    <div class="quick-logins">
+      <div class="quick-label">Quick login as:</div>
+      <div class="quick-row">
+        <div class="quick-role" onclick="quickLogin('admin')">👤 Admin</div>
+        <div class="quick-role" onclick="quickLogin('student')">🎓 Student</div>
+        <div class="quick-role" onclick="quickLogin('instructor')">📖 Instructor</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="appScreen" class="app" style="display:none">
+  <div class="sidebar">
+    <div class="logo">
+      <div class="logo-title">🎓 UniSystem</div>
+      <div class="logo-sub">Management Portal</div>
+    </div>
+    <div class="role-badge">
+      <div class="rb-label">Logged in as</div>
+      <div class="rb-name" id="sidebarName">Ali Admin</div>
+      <div class="rb-role" id="sidebarRole">Administrator</div>
+    </div>
+    <div class="nav" id="sideNav"></div>
+  </div>
+  <div class="main">
+    <div class="topbar">
+      <div class="page-title" id="pageTitle">Dashboard</div>
+      <div class="topbar-right">
+        <button class="top-btn" onclick="doLogout()">Logout</button>
+      </div>
+    </div>
+    <div class="content" id="mainContent"></div>
+  </div>
+</div>
+
+<script>
+const USERS = [
+  {id:1,name:'Ali Admin',    email:'ali@uni.edu',     pass:'admin123', role:'admin'},
+  {id:2,name:'John Student', email:'john@uni.edu',    pass:'pass1234', role:'student'},
+  {id:3,name:'Sara Instructor',email:'sara@uni.edu', pass:'teach567', role:'instructor'},
+];
+const COURSES = [
+  {id:101,name:'Data Structures',  dept:'CS',   cap:30,enrolled:12,slot:'Sun 10:00',instructor:'None'},
+  {id:102,name:'Calculus II',       dept:'Math', cap:25,enrolled:25,slot:'Mon 12:00',instructor:'None'},
+  {id:103,name:'Digital Logic',     dept:'ENG',  cap:20,enrolled:8, slot:'Tue 08:00',instructor:'None'},
+  {id:104,name:'OOP with C++',      dept:'CS',   cap:30,enrolled:20,slot:'Wed 10:00',instructor:'None'},
+  {id:105,name:'Linear Algebra',    dept:'Math', cap:25,enrolled:5, slot:'Thu 14:00',instructor:'None'},
+];
+const GRADES = [
+  {courseId:101,mark:85,letter:'B'},
+  {courseId:104,mark:92,letter:'A'},
+  {courseId:105,mark:61,letter:'D'},
+];
+const WARNINGS = [];
+let currentUser = null;
+let loginAttempts = 0;
+let studentEnrolled = [101,104,105];
+let allUsers = [...USERS];
+let allCourses = [...COURSES];
+let depts = {CS:['CS101','CS102'], ENG:['ENG101'], Math:['MATH101']};
+
+function quickLogin(role){
+  const u = allUsers.find(u=>u.role===role);
+  if(u){ document.getElementById('loginEmail').value=u.email; document.getElementById('loginPass').value=u.pass; }
+}
+
+function doLogin(){
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass  = document.getElementById('loginPass').value.trim();
+  const user  = allUsers.find(u=>u.email===email && u.pass===pass);
+  const alert = document.getElementById('loginAlert');
+
+  if(loginAttempts >= 3){ alert.textContent='Account locked. Too many wrong attempts.'; alert.className='alert error show'; return; }
+
+  if(!user){
+    loginAttempts++;
+    const left = 3 - loginAttempts;
+    alert.textContent = left > 0 ? `Wrong email or password. ${left} attempt(s) left.` : 'Account locked!';
+    alert.className='alert error show';
+    return;
+  }
+  loginAttempts = 0;
+  currentUser = user;
+  showApp();
+}
+
+function doLogout(){
+  currentUser=null;
+  document.getElementById('appScreen').style.display='none';
+  document.getElementById('loginScreen').style.display='flex';
+  document.getElementById('loginAlert').className='alert error';
+}
+
+function showApp(){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('appScreen').style.display='flex';
+  document.getElementById('sidebarName').textContent = currentUser.name;
+  document.getElementById('sidebarRole').textContent = currentUser.role.charAt(0).toUpperCase()+currentUser.role.slice(1);
+  buildNav();
+  if(currentUser.role==='admin') showPage('dashboard');
+  else if(currentUser.role==='student') showPage('courses');
+  else showPage('myCourses');
+}
+
+function buildNav(){
+  const nav = document.getElementById('sideNav');
+  const role = currentUser.role;
+  let items = [];
+  if(role==='admin') items=[
+    {id:'dashboard',icon:'📊',label:'Dashboard'},
+    {id:'audit',icon:'📋',label:'System Audit'},
+    {id:'search',icon:'🔍',label:'Search'},
+    {id:'warnings',icon:'⚠️',label:'Warning Letters'},
+    {id:'assignInstructor',icon:'🔗',label:'Assign Instructor'},
+    {id:'manageUsers',icon:'👥',label:'Manage Users'},
+    {id:'manageCourses',icon:'📚',label:'Manage Courses'},
+    {id:'departments',icon:'🏛️',label:'Departments'},
+  ];
+  else if(role==='student') items=[
+    {id:'courses',icon:'📚',label:'All Courses'},
+    {id:'myGrades',icon:'📝',label:'My Grades & GPA'},
+    {id:'transcript',icon:'📄',label:'Export Transcript'},
+    {id:'appeal',icon:'📢',label:'Grade Appeal'},
+  ];
+  else items=[
+    {id:'myCourses',icon:'📚',label:'My Courses'},
+    {id:'submitGrade',icon:'✏️',label:'Submit Grade'},
+    {id:'analytics',icon:'📊',label:'Grade Analytics'},
+    {id:'announcement',icon:'📣',label:'Post Announcement'},
+    {id:'reviewAppeals',icon:'📬',label:'Review Appeals'},
+    {id:'conflictCheck',icon:'🕐',label:'Conflict Checker'},
+  ];
+
+  nav.innerHTML = items.map(i=>`
+    <div class="nav-item" id="nav-${i.id}" onclick="showPage('${i.id}')">
+      <span class="icon">${i.icon}</span>${i.label}
+    </div>`).join('');
+}
+
+function setActive(id){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const el=document.getElementById('nav-'+id);
+  if(el) el.classList.add('active');
+}
+
+function alert2(msg,type='success'){
+  return `<div class="alert ${type} show" style="margin-bottom:14px">${msg}</div>`;
+}
+
+function output(lines){
+  return '<div class="output-box">'+lines.map(([t,c])=>`<div class="output-line ${c||''}">${t}</div>`).join('')+'</div>';
+}
+
+function showPage(id){
+  setActive(id);
+  document.getElementById('pageTitle').textContent = {
+    dashboard:'Dashboard',audit:'System Audit',search:'Search Engine',
+    warnings:'Warning Letters',assignInstructor:'Assign Instructor',
+    manageUsers:'Manage Users',manageCourses:'Manage Courses',
+    departments:'Departments',courses:'All Courses',myGrades:'My Grades & GPA',
+    transcript:'Export Transcript',appeal:'Grade Appeal',myCourses:'My Courses',
+    submitGrade:'Submit Grade',analytics:'Grade Analytics',
+    announcement:'Post Announcement',reviewAppeals:'Review Appeals',
+    conflictCheck:'Conflict Checker'
+  }[id]||id;
+
+  const c = document.getElementById('mainContent');
+  c.innerHTML = '';
+
+  if(id==='dashboard') renderDashboard(c);
+  else if(id==='audit') renderAudit(c);
+  else if(id==='search') renderSearch(c);
+  else if(id==='warnings') renderWarnings(c);
+  else if(id==='assignInstructor') renderAssign(c);
+  else if(id==='manageUsers') renderManageUsers(c);
+  else if(id==='manageCourses') renderManageCourses(c);
+  else if(id==='departments') renderDepartments(c);
+  else if(id==='courses') renderCourses(c);
+  else if(id==='myGrades') renderGrades(c);
+  else if(id==='transcript') renderTranscript(c);
+  else if(id==='appeal') renderAppeal(c);
+  else if(id==='myCourses') renderMyCourses(c);
+  else if(id==='submitGrade') renderSubmitGrade(c);
+  else if(id==='analytics') renderAnalytics(c);
+  else if(id==='announcement') renderAnnouncement(c);
+  else if(id==='reviewAppeals') renderReviewAppeals(c);
+  else if(id==='conflictCheck') renderConflictCheck(c);
+}
+
+function renderDashboard(c){
+  const students = allUsers.filter(u=>u.role==='student').length;
+  const instructors = allUsers.filter(u=>u.role==='instructor').length;
+  c.innerHTML=`
+  <div class="stat-row">
+    <div class="stat-card blue"><div class="stat-label">Total Users</div><div class="stat-value">${allUsers.length}</div><div class="stat-sub">Registered accounts</div></div>
+    <div class="stat-card green"><div class="stat-label">Students</div><div class="stat-value">${students}</div><div class="stat-sub">Active learners</div></div>
+    <div class="stat-card warn"><div class="stat-label">Instructors</div><div class="stat-value">${instructors}</div><div class="stat-sub">Faculty members</div></div>
+    <div class="stat-card red"><div class="stat-label">Courses</div><div class="stat-value">${allCourses.length}</div><div class="stat-sub">Available courses</div></div>
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-header"><span class="card-title">Course Enrollment Status</span></div>
+      ${allCourses.map(co=>`
+        <div style="margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px">
+            <span>${co.name}</span>
+            <span style="color:var(--muted)">${co.enrolled}/${co.cap}</span>
+          </div>
+          <div class="analytics-bar">
+            <div class="analytics-fill" style="width:${Math.round(co.enrolled/co.cap*100)}%;background:${co.enrolled>=co.cap?'#dc2626':co.enrolled/co.cap>0.7?'#d97706':'#2563eb'}">
+              ${Math.round(co.enrolled/co.cap*100)}%
+            </div>
+          </div>
+        </div>`).join('')}
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">All Users</span></div>
+      <table><thead><tr><th>Name</th><th>Role</th><th>Email</th></tr></thead><tbody>
+      ${allUsers.map(u=>`<tr><td>${u.name}</td><td><span class="badge ${u.role}">${u.role}</span></td><td style="color:var(--muted);font-size:12px">${u.email}</td></tr>`).join('')}
+      </tbody></table>
+    </div>
+  </div>`;
+}
+
+function renderAudit(c){
+  c.innerHTML=`<div class="card">
+    <div class="card-header"><span class="card-title">📋 Users File (users.txt)</span></div>
+    ${output(allUsers.map(u=>[`${u.id},${u.name},${u.email},${u.pass},${u.role}`,'cyan']))}
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">📋 Courses File (courses.txt)</span></div>
+    ${output(allCourses.map(co=>[`${co.id},${co.name},${co.dept},${co.instructor}`,'green']))}
+  </div>`;
+}
+
+function renderSearch(c){
+  c.innerHTML=`<div class="card">
+    <div class="card-header"><span class="card-title">🔍 Search Engine</span></div>
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <input id="searchKw" placeholder="Enter keyword..." style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:13px;outline:none">
+      <button class="btn primary" onclick="doSearch()">Search</button>
+    </div>
+    <div id="searchOut"></div>
+  </div>`;
+}
+function doSearch(){
+  const kw = document.getElementById('searchKw').value.toLowerCase();
+  if(!kw) return;
+  const uc = allUsers.filter(u=>u.name.toLowerCase().includes(kw)||u.email.toLowerCase().includes(kw)||u.role.includes(kw));
+  const cc = allCourses.filter(co=>co.name.toLowerCase().includes(kw)||co.dept.toLowerCase().includes(kw));
+  document.getElementById('searchOut').innerHTML=`
+    <div style="margin-bottom:10px"><b style="font-size:12px;color:var(--muted)">USERS (${uc.length} results)</b>
+    ${uc.length?'<table><thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th></tr></thead><tbody>'+uc.map(u=>`<tr><td>${u.id}</td><td>${u.name}</td><td>${u.email}</td><td><span class="badge ${u.role}">${u.role}</span></td></tr>`).join('')+'</tbody></table>':'<div style="color:var(--muted);font-size:13px;padding:8px 0">No users found.</div>'}</div>
+    <div><b style="font-size:12px;color:var(--muted)">COURSES (${cc.length} results)</b>
+    ${cc.length?'<table><thead><tr><th>ID</th><th>Name</th><th>Dept</th><th>Slot</th></tr></thead><tbody>'+cc.map(co=>`<tr><td>${co.id}</td><td>${co.name}</td><td>${co.dept}</td><td>${co.slot}</td></tr>`).join('')+'</tbody></table>':'<div style="color:var(--muted);font-size:13px;padding:8px 0">No courses found.</div>'}</div>`;
+}
+
+function renderWarnings(c){
+  const students = allUsers.filter(u=>u.role==='student');
+  c.innerHTML=`<div class="card">
+    <div class="card-header"><span class="card-title">⚠️ Send Warning Letters</span><button class="btn danger" onclick="sendWarnings()">Send All Warnings</button></div>
+    <div id="warnOut"></div>
+    <table><thead><tr><th>Student</th><th>Email</th><th>Status</th></tr></thead><tbody>
+    ${students.map(s=>`<tr><td>${s.name}</td><td style="color:var(--muted)">${s.email}</td><td><span class="badge warn">Under Review</span></td></tr>`).join('')}
+    </tbody></table>
+  </div>`;
+}
+function sendWarnings(){
+  document.getElementById('warnOut').innerHTML=alert2('⚠️ Warning letters sent to all students and saved to warnings.txt','info');
+}
+
+function renderAssign(c){
+  c.innerHTML=`<div class="card">
+    <div class="card-header"><span class="card-title">🔗 Assign Instructor to Course</span></div>
+    <div id="assignAlert"></div>
+    <div class="form-grid">
+      <div class="form-group"><label>Instructor</label>
+        <select id="assignInstr">${allUsers.filter(u=>u.role==='instructor').map(u=>`<option value="${u.id}">${u.name}</option>`).join('')}</select>
+      </div>
+      <div class="form-group"><label>Course</label>
+        <select id="assignCourse">${allCourses.map(co=>`<option value="${co.id}">${co.name}</option>`).join('')}</select>
+      </div>
+    </div>
+    <div class="form-actions"><button class="btn primary" onclick="doAssign()">Assign</button></div>
+    <div style="margin-top:16px">
+      <table><thead><tr><th>Course</th><th>Instructor</th><th>Status</th></tr></thead><tbody id="assignTable">
+      ${allCourses.map(co=>`<tr><td>${co.name}</td><td>${co.instructor==='None'?'<span style="color:var(--muted)">Not assigned</span>':co.instructor}</td><td><span class="badge ${co.instructor==='None'?'warn':'pass'}">${co.instructor==='None'?'Unassigned':'Assigned'}</span></td></tr>`).join('')}
+      </tbody></table>
+    </div>
+  </div>`;
+}
+function doAssign(){
+  const iid = parseInt(document.getElementById('assignInstr').value);
+  const cid = parseInt(document.getElementById('assignCourse').value);
+  const instr = allUsers.find(u=>u.id===iid);
+  const co = allCourses.find(c=>c.id===cid);
+  if(co && instr){ co.instructor=instr.name; document.getElementById('assignAlert').innerHTML=alert2(`✅ ${instr.name} assigned to ${co.name}. courses.txt updated.`); renderAssign(document.getElementById('mainContent')); }
+}
+
+function renderManageUsers(c){
+  c.innerHTML=`<div class="card">
+    <div class="card-header"><span class="card-title">Add New User</span></div>
+    <div id="userAlert"></div>
+    <div class="form-grid">
+      <div class="form-group"><label>Name</label><input id="uName" placeholder="Full name"></div>
+      <div class="form-group"><label>Email</label><input id="uEmail" placeholder="email@uni.edu"></div>
+      <div class="form-group"><label>Password</label><input id="uPass" placeholder="Min 8 chars + digit"></div>
+      <div class="form-group"><label>Role</label><select id="uRole"><option value="student">Student</option><option value="instructor">Instructor</option><option value="admin">Admin</option></select></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn primary" onclick="doAddUser()">Add User</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">All Users</span></div>
+    <table><thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Action</th></tr></thead><tbody id="userTable">
+    ${allUsers.map(u=>`<tr><td>${u.id}</td><td>${u.name}</td><td style="color:var(--muted)">${u.email}</td><td><span class="badge ${u.role}">${u.role}</span></td><td><button class="btn danger" style="padding:4px 10px;font-size:11px" onclick="doRemoveUser(${u.id})">Remove</button></td></tr>`).join('')}
+    </tbody></table>
+  </div>`;
+}
+function doAddUser(){
+  const name=document.getElementById('uName').value.trim();
+  const email=document.getElementById('uEmail').value.trim();
+  const pass=document.getElementById('uPass').value.trim();
+  const role=document.getElementById('uRole').value;
+  const al=document.getElementById('userAlert');
+  if(!name||!email||!pass){al.innerHTML=alert2('All fields required','error');return;}
+  if(!email.includes('@')||!email.includes('.')){al.innerHTML=alert2('Invalid email — must contain @ and .','error');return;}
+  if(pass.length<8){al.innerHTML=alert2('Password must be at least 8 characters','error');return;}
+  if(!/\d/.test(pass)){al.innerHTML=alert2('Password must contain at least one digit','error');return;}
+  if(allUsers.find(u=>u.email===email)){al.innerHTML=alert2('Email already exists','error');return;}
+  const newId=Math.max(...allUsers.map(u=>u.id))+1;
+  allUsers.push({id:newId,name,email,pass,role});
+  al.innerHTML=alert2(`✅ User added! ID: ${newId}. Saved to users.txt`);
+  renderManageUsers(document.getElementById('mainContent'));
+}
+function doRemoveUser(id){
+  if(id===currentUser.id){alert('Cannot remove yourself!');return;}
+  allUsers=allUsers.filter(u=>u.id!==id);
+  renderManageUsers(document.getElementById('mainContent'));
+}
+
+function renderManageCourses(c){
+  c.innerHTML=`<div class="card">
+    <div class="card-header"><span class="card-title">Add New Course</span></div>
+    <div id="courseAlert"></div>
+    <div class="form-grid">
+      <div class="form-group"><label>Course ID</label><input id="cId" placeholder="e.g. CS201"></div>
+      <div class="form-group"><label>Name</label><input id="cName" placeholder="Course name"></div>
+      <div class="form-group"><label>Department</label><input id="cDept" placeholder="CS / Math / ENG"></div>
+      <div class="form-group"><label>Capacity</label><input id="cCap" type="number" placeholder="30" value="30"></div>
+      <div class="form-group"><label>Time Slot</label><input id="cSlot" placeholder="Mon 10:00"></div>
+    </div>
+    <div class="form-actions"><button class="btn primary" onclick="doAddCourse()">Add Course</button></div>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">All Courses</span></div>
+    <table><thead><tr><th>ID</th><th>Name</th><th>Dept</th><th>Enrolled</th><th>Slot</th><th>Status</th></tr></thead><tbody>
+    ${allCourses.map(co=>`<tr><td>${co.id}</td><td>${co.name}</td><td>${co.dept}</td><td>${co.enrolled}/${co.cap}</td><td>${co.slot}</td><td><span class="badge ${co.enrolled>=co.cap?'full':'open'}">${co.enrolled>=co.cap?'FULL':'OPEN'}</span></td></tr>`).join('')}
+    </tbody></table>
+  </div>`;
+}
+function doAddCourse(){
+  const id=document.getElementById('cId').value.trim();
+  const name=document.getElementById('cName').value.trim();
+  const dept=document.getElementById('cDept').value.trim();
+  const cap=parseInt(document.getElementById('cCap').value)||30;
+  const slot=document.getElementById('cSlot').value.trim();
+  const al=document.getElementById('courseAlert');
+  if(!id||!name){al.innerHTML=alert2('ID and Name required','error');return;}
+  if(allCourses.find(c=>String(c.id)===id)){al.innerHTML=alert2('Course ID already exists','error');return;}
+  allCourses.push({id,name,dept,cap,enrolled:0,slot,instructor:'None'});
+  al.innerHTML=alert2(`✅ Course "${name}" added. Saved to courses.txt`);
+  renderManageCourses(document.getElementById('mainContent'));
+}
+
+function renderDepartments(c){
+  c.innerHTML=`<div class="card">
+    <div class="card-header"><span class="card-title">🏛️ Department Management</span></div>
+    <div id="deptAlert"></div>
+    <div class="form-grid">
+      <div class="form-group"><label>Department ID</label><input id="dId" placeholder="CS / ENG / Math"></div>
+      <div class="form-group"><label>Course ID to Add</label><input id="dCourse" placeholder="e.g. CS101"></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn primary" onclick="doDeptAdd()">Add Course to Dept</button>
+      <button class="btn danger" onclick="doDeptRemove()">Remove Course</button>
+    </div>
+  </div>
+  <div class="two-col">${Object.keys(depts).map(d=>`
+    <div class="card"><div class="card-header"><span class="card-title">🏛️ ${d} Department</span></div>
+    <table><thead><tr><th>Course ID</th></tr></thead><tbody>
+    ${depts[d].length?depts[d].map(co=>`<tr><td>${co}</td></tr>`).join(''):'<tr><td style="color:var(--muted)">No courses</td></tr>'}
+    </tbody></table></div>`).join('')}</div>`;
+}
+function doDeptAdd(){
+  const did=document.getElementById('dId').value.trim().toUpperCase();
+  const co=document.getElementById('dCourse').value.trim();
+  if(!did||!co)return;
+  if(!depts[did])depts[did]=[];
+  if(depts[did].includes(co)){document.getElementById('deptAlert').innerHTML=alert2('Course already in department','error');return;}
+  depts[did].push(co);
+  document.getElementById('deptAlert').innerHTML=alert2(`✅ ${co} added to ${did}. Saved to ${did}.txt`);
+  renderDepartments(document.getElementById('mainContent'));
+}
+function doDeptRemove(){
+  const did=document.getElementById('dId').value.trim().toUpperCase();
+  const co=document.getElementById('dCourse').value.trim();
+  if(depts[did])depts[did]=depts[did].filter(c=>c!==co);
+  renderDepartments(document.getElementById('mainContent'));
+}
+
+// ── STUDENT ──────────────────────────────────────────────────────────────────
+function renderCourses(c){
+  c.innerHTML=`<div id="enrollAlert"></div><div class="card">
+    <div class="card-header"><span class="card-title">All Available Courses</span></div>
+    <table><thead><tr><th>ID</th><th>Course</th><th>Dept</th><th>Time Slot</th><th>Seats</th><th>Status</th><th>Action</th></tr></thead><tbody>
+    ${allCourses.map(co=>{
+      const enrolled=studentEnrolled.includes(co.id);
+      const full=co.enrolled>=co.cap;
+      return `<tr><td>${co.id}</td><td>${co.name}</td><td>${co.dept}</td><td>${co.slot}</td><td>${co.enrolled}/${co.cap}</td>
+      <td><span class="badge ${full?'full':'open'}">${full?'FULL':'OPEN'}</span></td>
+      <td>${enrolled?'<span class="badge pass">Enrolled</span>':`<button class="btn primary" style="padding:4px 10px;font-size:11px" onclick="doEnroll(${co.id})">Enroll</button>`}</td></tr>`;
+    }).join('')}
+    </tbody></table></div>`;
+}
+function doEnroll(cid){
+  const al=document.getElementById('enrollAlert');
+  const co=allCourses.find(c=>c.id===cid);
+  if(!co) return;
+  if(studentEnrolled.includes(cid)){al.innerHTML=alert2('You are already enrolled in this course','error');return;}
+  if(co.enrolled>=co.cap){al.innerHTML=alert2('Course is full','error');return;}
+  const mySlots=allCourses.filter(c=>studentEnrolled.includes(c.id)).map(c=>c.slot);
+  if(mySlots.includes(co.slot)){al.innerHTML=alert2(`Time conflict! You already have a course at ${co.slot}`,'error');return;}
+  studentEnrolled.push(cid);
+  co.enrolled++;
+  GRADES.push({courseId:cid,mark:0,letter:'—'});
+  al.innerHTML=alert2(`✅ Enrolled in ${co.name} successfully!`);
+  renderCourses(document.getElementById('mainContent'));
+}
+
+function renderGrades(c){
+  const gpa = GRADES.length?GRADES.reduce((s,g)=>{
+    return s+({'A':4,'B':3,'C':2,'D':1,'F':0}[g.letter]||0);
+  },0)/GRADES.filter(g=>g.letter!=='—').length:0;
+  c.innerHTML=`<div class="stat-row" style="grid-template-columns:repeat(3,1fr)">
+    <div class="stat-card blue"><div class="stat-label">Courses Enrolled</div><div class="stat-value">${studentEnrolled.length}</div></div>
+    <div class="stat-card green"><div class="stat-label">GPA</div><div class="stat-value">${isNaN(gpa)?'0.00':gpa.toFixed(2)}</div></div>
+    <div class="stat-card ${gpa>=2?'green':'red'}"><div class="stat-label">Academic Status</div><div class="stat-value" style="font-size:16px">${gpa>=3?'Excellent':gpa>=2?'Good':'At Risk'}</div></div>
+  </div>
+  <div class="card"><div class="card-header"><span class="card-title">My Grades</span></div>
+    <table><thead><tr><th>Course</th><th>Mark</th><th>Letter</th><th>Passing</th></tr></thead><tbody>
+    ${GRADES.map(g=>{const co=allCourses.find(c=>c.id===g.courseId);return`<tr><td>${co?co.name:'Unknown'}</td><td>${g.mark}</td><td><b>${g.letter}</b></td><td><span class="badge ${g.mark>=50||g.letter==='—'?'pass':'fail'}">${g.mark>=50?'Yes':g.letter==='—'?'N/A':'No'}</span></td></tr>`;}).join('')}
+    </tbody></table></div>
+  <div id="dropAlert"></div>
+  <div class="card"><div class="card-header"><span class="card-title">Drop a Course</span></div>
+    <div style="display:flex;gap:8px"><select id="dropCourse" style="padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px">
+    ${GRADES.map(g=>{const co=allCourses.find(c=>c.id===g.courseId);return`<option value="${g.courseId}">${co?co.name:'Course '+g.courseId}</option>`;}).join('')}
+    </select><button class="btn danger" onclick="doDrop()">Drop Course</button></div>
+  </div>`;
+}
+function doDrop(){
+  const al=document.getElementById('dropAlert');
+  if(GRADES.length<=2){al.innerHTML=alert2('Cannot drop: minimum 2 courses required','error');return;}
+  const cid=parseInt(document.getElementById('dropCourse').value);
+  const g=GRADES.find(g=>g.courseId===cid);
+  if(g&&g.mark>0){al.innerHTML=alert2(`Course dropped with W grade (mark was ${g.mark})`,'info');g.letter='W';}
+  else{const idx=GRADES.findIndex(g=>g.courseId===cid);if(idx>-1)GRADES.splice(idx,1);studentEnrolled=studentEnrolled.filter(id=>id!==cid);al.innerHTML=alert2('Course dropped successfully');}
+  renderGrades(document.getElementById('mainContent'));
+}
+
+function renderTranscript(c){
+  const gpa=GRADES.filter(g=>g.letter!=='—'&&g.letter!=='W').reduce((s,g)=>s+({'A':4,'B':3,'C':2,'D':1,'F':0}[g.letter]||0),0)/Math.max(1,GRADES.filter(g=>g.letter!=='—'&&g.letter!=='W').length);
+  c.innerHTML=`<div class="card"><div class="card-header"><span class="card-title">Export Transcript</span><button class="btn success" onclick="doExport()">Export to File</button></div>
+    <div id="transAlert"></div>
+    ${output([
+      [`Name: ${currentUser.name}`,'cyan'],
+      [`ID:   ${currentUser.id}`,'cyan'],
+      [`Email: ${currentUser.email}`,'cyan'],
+      ['─────────────────────────','gray'],
+      ...GRADES.map(g=>{const co=allCourses.find(c=>c.id===g.courseId);return[`${co?co.name:'Course '+g.courseId} | Mark: ${g.mark} | Grade: ${g.letter}`,'green'];}),
+      ['─────────────────────────','gray'],
+      [`GPA: ${gpa.toFixed(2)}`,'yellow'],
+    ])}
+  </div>`;
+}
+function doExport(){
+  document.getElementById('transAlert').innerHTML=alert2(`✅ Transcript saved to ${currentUser.id}.txt`);
+}
+
+function renderAppeal(c){
+  c.innerHTML=`<div class="card"><div class="card-header"><span class="card-title">Submit Grade Appeal</span></div>
+    <div id="appealAlert"></div>
+    <div class="form-grid">
+      <div class="form-group"><label>Course</label><select id="apCourse">${GRADES.map(g=>{const co=allCourses.find(c=>c.id===g.courseId);return`<option value="${g.courseId}">${co?co.name:'Course '+g.courseId} (${g.letter})</option>`;}).join('')}</select></div>
+      <div class="form-group" style="grid-column:1/-1"><label>Reason</label><input id="apReason" placeholder="Explain why you are appealing this grade..."></div>
+    </div>
+    <div class="form-actions"><button class="btn primary" onclick="doAppeal()">Submit Appeal</button></div>
+  </div>`;
+}
+function doAppeal(){
+  const reason=document.getElementById('apReason').value.trim();
+  if(!reason){document.getElementById('appealAlert').innerHTML=alert2('Please provide a reason','error');return;}
+  document.getElementById('appealAlert').innerHTML=alert2(`✅ Appeal submitted! Saved to appeals.txt`);
+  document.getElementById('apReason').value='';
+}
+
+// ── INSTRUCTOR ────────────────────────────────────────────────────────────────
+function renderMyCourses(c){
+  c.innerHTML=`<div class="card"><div class="card-header"><span class="card-title">My Assigned Courses</span></div>
+    <div id="assignSelfAlert"></div>
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <select id="selfCourse" style="padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;flex:1">
+        ${allCourses.map(co=>`<option value="${co.id}">${co.name}</option>`).join('')}
+      </select>
+      <button class="btn primary" onclick="selfAssign()">Assign to Me</button>
+    </div>
+    <table><thead><tr><th>ID</th><th>Course</th><th>Dept</th><th>Time</th><th>Students</th></tr></thead><tbody>
+    ${allCourses.filter(co=>co.instructor===currentUser.name).map(co=>`<tr><td>${co.id}</td><td>${co.name}</td><td>${co.dept}</td><td>${co.slot}</td><td>${co.enrolled}</td></tr>`).join('')||'<tr><td colspan="5" style="color:var(--muted);text-align:center;padding:20px">No courses assigned yet</td></tr>'}
+    </tbody></table></div>`;
+}
+function selfAssign(){
+  const cid=parseInt(document.getElementById('selfCourse').value);
+  const co=allCourses.find(c=>c.id===cid);
+  if(co){co.instructor=currentUser.name;document.getElementById('assignSelfAlert').innerHTML=alert2(`✅ Assigned to ${co.name}`);}
+  renderMyCourses(document.getElementById('mainContent'));
+}
+
+function renderSubmitGrade(c){
+  c.innerHTML=`<div class="card"><div class="card-header"><span class="card-title">Submit Grade</span></div>
+    <div id="gradeAlert"></div>
+    <div class="form-grid">
+      <div class="form-group"><label>Student ID</label><input id="gSid" type="number" placeholder="Student ID"></div>
+      <div class="form-group"><label>Course ID</label><input id="gCid" type="number" placeholder="Course ID"></div>
+      <div class="form-group"><label>Mark (0-100)</label><input id="gMark" type="number" min="0" max="100" placeholder="85"></div>
+    </div>
+    <div class="form-actions"><button class="btn primary" onclick="doSubmitGrade()">Submit Grade</button></div>
+  </div>`;
+}
+function doSubmitGrade(){
+  const sid=parseInt(document.getElementById('gSid').value);
+  const cid=parseInt(document.getElementById('gCid').value);
+  const mark=parseFloat(document.getElementById('gMark').value);
+  const al=document.getElementById('gradeAlert');
+  if(!sid||!cid||isNaN(mark)){al.innerHTML=alert2('All fields required','error');return;}
+  if(mark<0||mark>100){al.innerHTML=alert2('Mark must be 0–100','error');return;}
+  const letter=mark>=90?'A':mark>=80?'B':mark>=70?'C':mark>=60?'D':'F';
+  al.innerHTML=alert2(`✅ Grade submitted — Student ${sid}, Course ${cid}: ${mark} (${letter})`);
+}
+
+function renderAnalytics(c){
+  const marks=[85,92,61,78,55,43,90,67];
+  const avg=(marks.reduce((a,b)=>a+b,0)/marks.length).toFixed(1);
+  const high=Math.max(...marks); const low=Math.min(...marks);
+  const pass=marks.filter(m=>m>=50).length;
+  c.innerHTML=`<div class="stat-row">
+    <div class="stat-card blue"><div class="stat-label">Average</div><div class="stat-value">${avg}</div></div>
+    <div class="stat-card green"><div class="stat-label">Highest</div><div class="stat-value">${high}</div></div>
+    <div class="stat-card warn"><div class="stat-label">Lowest</div><div class="stat-value">${low}</div></div>
+    <div class="stat-card ${pass/marks.length>=0.7?'green':'red'}"><div class="stat-label">Pass Rate</div><div class="stat-value">${Math.round(pass/marks.length*100)}%</div></div>
+  </div>
+  <div class="card"><div class="card-header"><span class="card-title">Grade Distribution</span></div>
+    ${['A','B','C','D','F'].map(l=>{
+      const count=marks.filter(m=>l==='A'?m>=90:l==='B'?m>=80&&m<90:l==='C'?m>=70&&m<80:l==='D'?m>=60&&m<70:m<60).length;
+      const pct=Math.round(count/marks.length*100);
+      return`<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div style="width:20px;font-weight:600;font-size:13px">${l}</div>
+        <div class="analytics-bar" style="flex:1">
+          <div class="analytics-fill" style="width:${pct}%;background:${l==='A'?'#16a34a':l==='B'?'#2563eb':l==='C'?'#d97706':l==='D'?'#ea580c':'#dc2626'}">${pct}%</div>
+        </div>
+        <div style="font-size:12px;color:var(--muted)">${count} students</div>
+      </div>`;}).join('')}
+  </div>`;
+}
+
+function renderAnnouncement(c){
+  c.innerHTML=`<div class="card"><div class="card-header"><span class="card-title">Post Announcement</span></div>
+    <div id="annAlert"></div>
+    <div class="form-group" style="margin-bottom:10px"><label>Title</label><input id="annTitle" placeholder="Announcement title"></div>
+    <div class="form-group" style="margin-bottom:10px"><label>Body</label><input id="annBody" placeholder="Announcement body text"></div>
+    <div class="form-group" style="margin-bottom:14px"><label>Date</label><input id="annDate" placeholder="2026-05-16"></div>
+    <div class="form-actions"><button class="btn primary" onclick="doAnnouncement()">Post Announcement</button></div>
+    <div id="annPreview" style="margin-top:14px"></div>
+  </div>`;
+}
+function doAnnouncement(){
+  const t=document.getElementById('annTitle').value.trim();
+  const b=document.getElementById('annBody').value.trim();
+  const d=document.getElementById('annDate').value.trim();
+  if(!t||!b){document.getElementById('annAlert').innerHTML=alert2('Title and body required','error');return;}
+  document.getElementById('annAlert').innerHTML=alert2('✅ Announcement posted!');
+  document.getElementById('annPreview').innerHTML=output([
+    ['* Announcement *','cyan'],
+    [`Title: ${t}`,'green'],[`Date:  ${d}`,'gray'],[`Body:  ${b}`,'white'],[`Posted by: ${currentUser.name} (ID ${currentUser.id})`,'gray']
+  ]);
+}
+
+function renderReviewAppeals(c){
+  c.innerHTML=`<div class="card"><div class="card-header"><span class="card-title">Review Grade Appeals</span></div>
+    <div id="reviewAlert"></div>
+    ${output([['Student 2 appeals Course 101 - Reason: I believe my mark was calculated incorrectly','yellow'],['Student 2 appeals Course 104 - Reason: I was sick during the final exam','yellow']])}
+    <div style="margin-top:14px;display:flex;gap:8px">
+      <button class="btn success" onclick="document.getElementById('reviewAlert').innerHTML=alert2('✅ Appeal approved. Grade updated.')">Approve #1</button>
+      <button class="btn danger" onclick="document.getElementById('reviewAlert').innerHTML=alert2('Appeal rejected.','error')">Reject #1</button>
+    </div>
+  </div>`;
+}
+
+function renderConflictCheck(c){
+  c.innerHTML=`<div class="card"><div class="card-header"><span class="card-title">Time Slot Conflict Checker</span></div>
+    <div id="conflictAlert"></div>
+    <div class="form-grid">
+      <div class="form-group"><label>New Course</label><select id="ccCourse">${allCourses.map(co=>`<option value="${co.id}">${co.name} (${co.slot})</option>`).join('')}</select></div>
+      <div class="form-group"><label>Existing Slots (comma separated)</label><input id="ccSlots" placeholder="Sun 10:00, Mon 12:00"></div>
+    </div>
+    <div class="form-actions"><button class="btn primary" onclick="doConflict()">Check Conflict</button></div>
+  </div>
+  <div class="card"><div class="card-header"><span class="card-title">All Course Time Slots</span></div>
+    <table><thead><tr><th>Course</th><th>Time Slot</th></tr></thead><tbody>
+    ${allCourses.map(co=>`<tr><td>${co.name}</td><td>${co.slot}</td></tr>`).join('')}
+    </tbody></table>
+  </div>`;
+}
+function doConflict(){
+  const cid=parseInt(document.getElementById('ccCourse').value);
+  const co=allCourses.find(c=>c.id===cid);
+  const slots=document.getElementById('ccSlots').value.split(',').map(s=>s.trim()).filter(Boolean);
+  const al=document.getElementById('conflictAlert');
+  if(!co)return;
+  const clash=slots.find(s=>s===co.slot);
+  if(clash) al.innerHTML=alert2(`⛔ Time conflict! "${co.name}" clashes at slot "${co.slot}"`, 'error');
+  else al.innerHTML=alert2(`✅ No conflict. Safe to enroll in "${co.name}" at ${co.slot}`);
+}
+</script>
